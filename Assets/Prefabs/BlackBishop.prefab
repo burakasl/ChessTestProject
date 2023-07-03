@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6996035400132492972}
   - component: {fileID: 5562972973022346169}
   - component: {fileID: 1905126060393251960}
-  - component: {fileID: -2463924766564142706}
+  - component: {fileID: 4665734218968116738}
   m_Layer: 6
   m_Name: BlackBishop
   m_TagString: Untagged
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.67577994, y: 0.67431474}
   m_EdgeRadius: 0
---- !u!114 &-2463924766564142706
+--- !u!114 &4665734218968116738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  player: 0
   tile: {fileID: 0}
-  isPinned: 0

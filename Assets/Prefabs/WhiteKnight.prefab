@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4042709344406652602}
   - component: {fileID: 6145099476205770141}
   - component: {fileID: 8258764265256778986}
-  - component: {fileID: 4531278891677343221}
+  - component: {fileID: 8025825021575727963}
+  - component: {fileID: 1464361335874956910}
   m_Layer: 6
   m_Name: WhiteKnight
   m_TagString: Untagged
@@ -131,7 +132,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.67577994, y: 0.67431474}
   m_EdgeRadius: 0
---- !u!114 &4531278891677343221
+--- !u!114 &8025825021575727963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,6 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dda37965a27dc48969908ef5da92ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
+  player: 0
   tile: {fileID: 0}
-  isPinned: 0
+  isFirstMove: 0
+--- !u!114 &1464361335874956910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8976778938604251052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 063948c6409bf274eb9575c85a64649a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

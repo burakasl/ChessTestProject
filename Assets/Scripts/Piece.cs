@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PieceManager : MonoBehaviour
+public class Piece : MonoBehaviour
 {
     public enum PieceType
     {
@@ -17,6 +17,7 @@ public class PieceManager : MonoBehaviour
     public PieceType type;
     public Player player;
     public GameObject tile;
+    public bool isFirstMove;
 
     private void Start()
     {

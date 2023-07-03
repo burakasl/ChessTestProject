@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4951986393005115564}
   - component: {fileID: 3843089089273359550}
   - component: {fileID: 613611741213631411}
-  - component: {fileID: -4829289203163135813}
+  - component: {fileID: -4825599315505815918}
   m_Layer: 6
   m_Name: BlackKing
   m_TagString: Untagged
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.67577994, y: 0.67431474}
   m_EdgeRadius: 0
---- !u!114 &-4829289203163135813
+--- !u!114 &-4825599315505815918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  player: 0
   tile: {fileID: 0}
-  isPinned: 0

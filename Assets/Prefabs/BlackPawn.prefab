@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8483547579243564520}
   - component: {fileID: 499663797124042151}
   - component: {fileID: 1388314816446823734}
-  - component: {fileID: 6300239430904309522}
+  - component: {fileID: -8051580081697451820}
   m_Layer: 6
   m_Name: BlackPawn
   m_TagString: Untagged
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.67577994, y: 0.67431474}
   m_EdgeRadius: 0
---- !u!114 &6300239430904309522
+--- !u!114 &-8051580081697451820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  player: 0
   tile: {fileID: 0}
-  isPinned: 0

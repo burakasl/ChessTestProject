@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3381355850064156802}
   - component: {fileID: 5026022715032642496}
   - component: {fileID: 206106163085495929}
-  - component: {fileID: -6312256928756443159}
+  - component: {fileID: 2859532522394189092}
   m_Layer: 6
   m_Name: BlackRook
   m_TagString: Untagged
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.67577994, y: 0.67431474}
   m_EdgeRadius: 0
---- !u!114 &-6312256928756443159
+--- !u!114 &2859532522394189092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,5 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  player: 0
   tile: {fileID: 0}
-  isPinned: 0

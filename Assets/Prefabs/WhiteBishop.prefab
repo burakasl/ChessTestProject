@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 137057682444203003}
   - component: {fileID: 4067655720767691951}
   - component: {fileID: 706105284926137370}
-  - component: {fileID: -8823038291459044199}
+  - component: {fileID: -615385896394563811}
+  - component: {fileID: -1459947878077093738}
   m_Layer: 6
   m_Name: WhiteBishop
   m_TagString: Untagged
@@ -131,7 +132,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.67577994, y: 0.67431474}
   m_EdgeRadius: 0
---- !u!114 &-8823038291459044199
+--- !u!114 &-615385896394563811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,6 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dda37965a27dc48969908ef5da92ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
+  player: 0
   tile: {fileID: 0}
-  isPinned: 0
+  isFirstMove: 0
+--- !u!114 &-1459947878077093738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833329571769401353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bd2b0443f80114fa405c7137f1fc8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

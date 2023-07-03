@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 9121914911606291043}
   - component: {fileID: 284919874494021628}
   - component: {fileID: 7655335198988650851}
-  - component: {fileID: -5379557891226265657}
+  - component: {fileID: -3280186781168158197}
+  - component: {fileID: -6046223573730113939}
   m_Layer: 6
   m_Name: WhiteQueen
   m_TagString: Untagged
@@ -131,7 +132,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.67577994, y: 0.67431474}
   m_EdgeRadius: 0
---- !u!114 &-5379557891226265657
+--- !u!114 &-3280186781168158197
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,6 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dda37965a27dc48969908ef5da92ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
+  player: 0
   tile: {fileID: 0}
-  isPinned: 0
+  isFirstMove: 0
+--- !u!114 &-6046223573730113939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921952392204631126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9320a8e04f1a74582f27b262a8780d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
