@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PieceController : MonoBehaviour
 {
     private GameObject selectedPiece;
+    private Vector2 originalPiecePosition;
+    TileManager tileManager;
+    GameController gameController;
     MoveController moveController;
-    private List<GameObject> changedTiles;
+    private List<GameObject> activeTiles;
 
     private void Start()
     {
-        changedTiles = new List<GameObject>();
+        tileManager = GetComponent<TileManager>();
+        gameController = GetComponent<GameController>();
+        activeTiles = new List<GameObject>();
         selectedPiece = null;
     }
 
@@ -28,7 +34,17 @@ public class PieceController : MonoBehaviour
 
         if (Input.GetButtonUp("Fire1"))
         {
-            ResetSelectedPiece();
+            GameObject activeTile = GetActiveTile();
+
+            if (activeTile != null)
+            {
+                ApplyMove(activeTile);
+            }
+
+            else
+            {
+                CancelMove();
+            }
         }
     }
 
@@ -42,11 +58,20 @@ public class PieceController : MonoBehaviour
 
     private void CheckPiece()
     {
-        selectedPiece = Physics2D.OverlapCircle(GetMousePosition(), 0.1f, LayerMask.GetMask("Piece")).gameObject;
-
-        if (selectedPiece != null)
+        if (Physics2D.OverlapCircle(GetMousePosition(), 0.1f, LayerMask.GetMask("Piece")))
         {
-            ShowPossibleMoves();
+            selectedPiece = Physics2D.OverlapCircle(GetMousePosition(), 0.1f, LayerMask.GetMask("Piece")).gameObject;
+
+            if (selectedPiece.GetComponent<Piece>().canMove)
+            {
+                originalPiecePosition = selectedPiece.transform.position;
+                ShowPossibleMoves();
+            }
+
+            else
+            {
+                selectedPiece = null;
+            }
         }
     }
 
@@ -58,10 +83,61 @@ public class PieceController : MonoBehaviour
         }
     }
 
-    private void ResetSelectedPiece()
+    private GameObject GetActiveTile()
     {
+        Vector3 mousePosition = GetMousePosition();
+
+        GameObject tileObject = null;
+
+        if (Physics2D.OverlapCircle(mousePosition, 0.1f, LayerMask.GetMask("Tile")))
+        {
+            tileObject = Physics2D.OverlapCircle(mousePosition, 0.1f, LayerMask.GetMask("Tile")).gameObject;
+
+            if (activeTiles.Contains(tileObject))
+            {
+                return tileObject;
+            }
+        }
+
+        return null;
+    }
+
+    private void ApplyMove(GameObject activeTile)
+    {
+        PlacePiece(selectedPiece, activeTile.transform.position);
+
+        Tile oldTile = selectedPiece.GetComponent<Piece>().tile.GetComponent<Tile>();
+        oldTile.SetPiece();
+
+        Piece.Player player = selectedPiece.GetComponent<Piece>().player;
+        GameObject capturedPiece = null;
+
+        if (tileManager.CheckRivalOccupation(activeTile, player))
+        {
+            capturedPiece = activeTile.GetComponent<Tile>().piece;
+        }
+
+        gameController.ApplyMove(selectedPiece, capturedPiece);
+        gameController.SetTilesPassive(activeTiles);
         HidePossibleMoves();
         selectedPiece = null;
+    }
+
+    private void CancelMove()
+    {
+        if (selectedPiece != null)
+        {
+            PlacePiece(selectedPiece, originalPiecePosition);
+        }
+
+        gameController.SetTilesPassive(activeTiles);
+        HidePossibleMoves();
+        selectedPiece = null;
+    }
+
+    private void PlacePiece(GameObject piece, Vector2 position)
+    {
+        piece.transform.position = position;
     }
 
     private void ShowPossibleMoves()
@@ -73,14 +149,16 @@ public class PieceController : MonoBehaviour
 
         foreach (GameObject tile in possibleMoves)
         {
+            tile.GetComponent<Tile>().isGoodForMove = true;
             tile.GetComponent<SpriteRenderer>().color = Color.green;
-            changedTiles.Add(tile);
+            activeTiles.Add(tile);
         }
 
         foreach (GameObject tile in possibleCaptures)
         {
+            tile.GetComponent<Tile>().isGoodForCapture = true;
             tile.GetComponent <SpriteRenderer>().color = Color.red;
-            changedTiles.Add(tile);
+            activeTiles.Add(tile);
         }
 
         
@@ -88,10 +166,13 @@ public class PieceController : MonoBehaviour
 
     private void HidePossibleMoves()
     {
-        foreach (GameObject tile in changedTiles)
+        foreach (GameObject tile in activeTiles)
         {
+            gameController.SetTilesPassive(activeTiles);
             tile.GetComponent<SpriteRenderer>().color = tile.GetComponent<Tile>().originalColor;
         }
+
+        activeTiles.Clear();
     }
 
     private void SetControllerType()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 130659975642039270}
   - component: {fileID: 4508621709276030521}
   - component: {fileID: -9191879564414019461}
+  - component: {fileID: 2081275461972589415}
   m_Layer: 6
   m_Name: BlackKnight
   m_TagString: Untagged
@@ -143,6 +144,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dda37965a27dc48969908ef5da92ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  player: 0
+  type: 1
+  player: 1
   tile: {fileID: 0}
+  isFirstMove: 0
+  canMove: 0
+--- !u!114 &2081275461972589415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8575241577137335477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 063948c6409bf274eb9575c85a64649a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -17,14 +17,14 @@ public class Piece : MonoBehaviour
     public PieceType type;
     public Player player;
     public GameObject tile;
-    public bool isFirstMove;
+    public bool isFirstMove, canMove;
 
     private void Start()
     {
         SetTile();
     }
 
-    private void SetTile()
+    public void SetTile()
     {
         tile = Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("Tile")).gameObject;
     }

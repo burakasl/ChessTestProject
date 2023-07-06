@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5179682163343110073}
   - component: {fileID: 3741663092457568763}
   - component: {fileID: -8913916062828113652}
+  - component: {fileID: 4789515040339112446}
   m_Layer: 6
   m_Name: BlackQueen
   m_TagString: Untagged
@@ -143,6 +144,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dda37965a27dc48969908ef5da92ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  player: 0
+  type: 4
+  player: 1
   tile: {fileID: 0}
+  isFirstMove: 0
+  canMove: 0
+--- !u!114 &4789515040339112446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3392599142111637330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9320a8e04f1a74582f27b262a8780d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

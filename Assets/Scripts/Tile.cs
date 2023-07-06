@@ -19,7 +19,7 @@ public class Tile : MonoBehaviour
     public Row row;
     public Colummn colummn;
     public GameObject piece;
-    public bool isOccupied, isThreatened;
+    public bool isOccupied, isThreatened, isGoodForMove, isGoodForCapture;
 
     private void Start()
     {
@@ -27,6 +27,7 @@ public class Tile : MonoBehaviour
         SetRow();
         SetColumn();
         originalColor = GetComponent<SpriteRenderer>().color;
+        isGoodForMove = false; isGoodForCapture = false; isThreatened = false;
     }
 
     public void SetPiece()

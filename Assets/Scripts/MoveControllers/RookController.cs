@@ -40,8 +40,8 @@ public class RookController : MoveController
     {
         List<GameObject> possibleTiles = new List<GameObject>();
 
-        List<Vector2> vectors = new List<Vector2> {new Vector2(1, 0), new Vector2(0, 1),
-            new Vector2(-1, 0), new Vector2(0, -1)};
+        List<Vector2> vectors = new List<Vector2> { new Vector2(1,0), new Vector2(0,1),
+        new Vector2(-1, 0), new Vector2(0, -1)};
 
         foreach (Vector2 vector in vectors)
         {
