@@ -22,6 +22,8 @@ public class BoardSwapManager : MonoBehaviour
         {
             boardObjectPosition.Key.transform.position = boardObjectPosition.Value * -1;
         }
+
+        boardPositions.Clear();
     }
 
     private void MergeBoardObjects()
@@ -34,26 +36,6 @@ public class BoardSwapManager : MonoBehaviour
         foreach (Transform tileTransform in tiles.transform)
         {
             boardPositions.Add(tileTransform.gameObject, tileTransform.position);
-        }
-    }
-
-    private void DisablePieceColliders()
-    {
-        foreach (Transform pieceTransform in pieces.transform)
-        {
-            GameObject pieceObject = pieceTransform.gameObject;
-            pieceObject.GetComponent<BoxCollider2D>().enabled = false;
-
-        }
-    }
-
-    private void SetTilePiecesNull()
-    {
-        foreach (Transform tileTransform in tiles.transform)
-        {
-            Tile tile = tileTransform.gameObject.GetComponent<Tile>();
-            tile.piece = null;
-            tile.isOccupied = false;
         }
     }
 }

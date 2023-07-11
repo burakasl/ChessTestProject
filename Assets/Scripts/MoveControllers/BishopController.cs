@@ -6,7 +6,7 @@ public class BishopController : MoveController
 {
     public override List<GameObject> CheckCaptures()
     {
-        List<GameObject> possibleTiles = GetPossibleTiles();
+        List<GameObject> possibleTiles = GetThreatenedTiles();
         List<GameObject> possibleCaptures = new List<GameObject>();
 
         foreach (GameObject tileObject in possibleTiles)
@@ -22,7 +22,7 @@ public class BishopController : MoveController
 
     public override List<GameObject> CheckMoves()
     {
-        List<GameObject> possibleTiles = GetPossibleTiles();
+        List<GameObject> possibleTiles = GetThreatenedTiles();
         List<GameObject> possibleMoves = new List<GameObject>();
 
         foreach (GameObject tileObject in possibleTiles)
@@ -36,7 +36,7 @@ public class BishopController : MoveController
         return possibleMoves;
     }
 
-    private List<GameObject> GetPossibleTiles()
+    public override List<GameObject> GetThreatenedTiles()
     {
         List<GameObject> possibleTiles = new List<GameObject>();
 

@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dda37965a27dc48969908ef5da92ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 5
   player: 1
   tile: {fileID: 0}
   isFirstMove: 0

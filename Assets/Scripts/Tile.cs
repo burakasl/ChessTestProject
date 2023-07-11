@@ -21,13 +21,16 @@ public class Tile : MonoBehaviour
     public GameObject piece;
     public bool isOccupied, isThreatened, isGoodForMove, isGoodForCapture;
 
+    public bool isGoodForEnPassant;
+    public GameObject enPassantPiece;
+
     private void Start()
     {
         SetPiece();
         SetRow();
         SetColumn();
         originalColor = GetComponent<SpriteRenderer>().color;
-        isGoodForMove = false; isGoodForCapture = false; isThreatened = false;
+        isGoodForMove = false; isGoodForCapture = false; isThreatened = false; isGoodForEnPassant = false;
     }
 
     public void SetPiece()
@@ -43,6 +46,11 @@ public class Tile : MonoBehaviour
             piece = null;
             isOccupied = false;
         }
+    }
+
+    public void SetEnPassantPiece(GameObject piece)
+    {
+        enPassantPiece = piece;
     }
 
     private void SetRow()

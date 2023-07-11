@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
+    [SerializeField] private GameObject pieces;
+
     public GameObject GetTile(Vector2 offset, GameObject currentTile)
     {
         Vector2 tilePosition = currentTile.transform.position;
@@ -50,5 +52,29 @@ public class TileManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public List<GameObject> GetThreatenedTiles(Piece.Player player)
+    {
+        List<GameObject> threatenedTiles = new List<GameObject>();
+
+        foreach (Transform pieceTransform in pieces.transform)
+        {
+            Piece piece = pieceTransform.gameObject.GetComponent<Piece>();
+
+            if (piece.player != player)
+            {
+                MoveController moveController = pieceTransform.gameObject.GetComponent<MoveController>();
+
+                List<GameObject> tempList = moveController.GetThreatenedTiles();
+
+                foreach (GameObject tile in tempList)
+                {
+                    threatenedTiles.Add(tile);
+                }
+            }
+        }
+
+        return threatenedTiles;
     }
 }

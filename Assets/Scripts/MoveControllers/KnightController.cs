@@ -45,4 +45,25 @@ public class KnightController : MoveController
 
         return possibleMoves;
     }
+
+    public override List<GameObject> GetThreatenedTiles()
+    {
+        List<GameObject> threatenedTiles = new List<GameObject>();
+
+        List<Vector2> possibleTiles = new List<Vector2> { new Vector2(1, 2), new Vector2(2, 1),
+        new Vector2(1, -2), new Vector2(2, -1), new Vector2(-1, 2), new Vector2(-2, 1),
+        new Vector2(-1, -2), new Vector2(-2, -1)};
+
+        foreach (Vector2 tileVector in possibleTiles)
+        {
+            GameObject tile = tileManager.GetTile(tileVector, piece.tile);
+
+            if (tile != null)
+            {
+                threatenedTiles.Add(tile);
+            }
+        }
+        
+        return threatenedTiles;
+    }
 }

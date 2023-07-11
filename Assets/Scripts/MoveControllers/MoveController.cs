@@ -17,4 +17,5 @@ public abstract class MoveController : MonoBehaviour
 
     public abstract List<GameObject> CheckCaptures();
     public abstract List<GameObject> CheckMoves();
+    public abstract List<GameObject> GetThreatenedTiles();
 }

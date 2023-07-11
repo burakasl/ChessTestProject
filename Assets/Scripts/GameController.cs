@@ -1,41 +1,102 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static Piece;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private GameObject pieces;
+    [SerializeField] private GameObject pieces, tiles;
     private int moveCount;
     BoardSwapManager boardSwapManager;
-    Piece.Player currentPlayer;
+    public Piece.Player currentPlayer;
+    TileManager tileManager;
 
     private void Start()
     {
         moveCount = 1;
         currentPlayer = Piece.Player.White;
         boardSwapManager = GetComponent<BoardSwapManager>();
+        tileManager = GetComponent<TileManager>();
     }
 
-    public void ApplyMove(GameObject playedPieceObject, GameObject capturedPiece)
+    public void ApplyMove(GameObject playedPieceObject, GameObject activeTile, List<GameObject> activeTiles)
     {
+        Piece playedPiece = playedPieceObject.GetComponent<Piece>();
+        GameObject capturedPiece = SetCapturedPiece(activeTile, playedPieceObject);
 
-        if (capturedPiece != null)
+        CheckForEnPassant(playedPiece, activeTile);
+        CapturePiece(capturedPiece);       
+        ResetTiles(playedPiece);
+        SetFirstMove(playedPieceObject);
+        SetCurrentPlayer();
+        DisableEnPassantTiles();
+        SetActivePieces();
+        SetTilesPassive(activeTiles);
+        moveCount++;
+        boardSwapManager.SwapBoard();
+    }
+
+    private GameObject SetCapturedPiece(GameObject activeTile, GameObject playedPiece)
+    {
+        Piece.Player player = playedPiece.GetComponent<Piece>().player;
+        Tile activeTileScript = activeTile.GetComponent<Tile>();
+
+        if (tileManager.CheckRivalOccupation(activeTile, player))
         {
-            Destroy(capturedPiece);
+            return activeTile.GetComponent<Tile>().piece;
         }
 
-        Piece playedPiece = playedPieceObject.GetComponent<Piece>();
+        if (activeTileScript.isGoodForEnPassant)
+        {
+            return activeTileScript.enPassantPiece;
+        }
+
+        return null;
+    }
+
+    private void CapturePiece(GameObject capturedPieceObject)
+    {
+        if (capturedPieceObject != null)
+        {
+            Piece capturedPiece = capturedPieceObject.GetComponent<Piece>();
+            Tile tile = capturedPiece.tile.GetComponent<Tile>();
+            tile.SetPiece();
+            Destroy(capturedPieceObject);
+        }
+    }
+
+    private void CheckForEnPassant(Piece playedPiece, GameObject activeTile)
+    {
+        if (playedPiece.type == Piece.PieceType.Pawn)
+        {
+            playedPiece.GetComponent<PawnController>().SetEnPassantTile(activeTile);
+        }
+    }
+
+    private void ResetTiles(Piece playedPiece)
+    {
+        Tile oldTile = playedPiece.GetComponent<Piece>().tile.GetComponent<Tile>();
         playedPiece.SetTile();
 
         Tile tile = playedPiece.tile.GetComponent<Tile>();
-        Debug.Log(tile.name);
         tile.SetPiece();
+        oldTile.SetPiece();
+    }
 
-        SetFirstMove(playedPieceObject);
-        SetCurrentPlayer();
-        SetActivePieces();
-        moveCount++;
-        boardSwapManager.SwapBoard();
+    private void DisableEnPassantTiles()
+    {
+        foreach (Transform tileTransform in tiles.transform)
+        {
+            Tile tile = tileTransform.gameObject.GetComponent<Tile>();
+
+            if (tile.isGoodForEnPassant &&
+                tile.enPassantPiece.GetComponent<Piece>().player == currentPlayer)
+            {
+                tile.isGoodForEnPassant = false;
+                tile.enPassantPiece = null;
+            }
+        }
     }
 
     private void SetFirstMove(GameObject pieceObject)

@@ -10,10 +10,13 @@ public class PawnController : MoveController
 
         GameObject topLeftTile = tileManager.GetTile(new Vector2(-1, 1), piece.tile);
 
-        if (topLeftTile != null &&
-            tileManager.CheckRivalOccupation(topLeftTile, piece.player))
+        if (topLeftTile != null)
         {
-            possibleTiles.Add(topLeftTile);
+            if (tileManager.CheckRivalOccupation(topLeftTile, piece.player) ||
+                topLeftTile.GetComponent<Tile>().isGoodForEnPassant)
+            {
+                possibleTiles.Add(topLeftTile);
+            }
         }
 
         GameObject topRightTile = tileManager.GetTile(new Vector2(1, 1), piece.tile);
@@ -58,5 +61,40 @@ public class PawnController : MoveController
         }
 
         return possibleTiles;
+    }
+
+    public override List<GameObject> GetThreatenedTiles()
+    {
+        List<GameObject> threatenedTiles = new List<GameObject>();
+
+        GameObject topLeftTile = tileManager.GetTile(new Vector2(-1, -1), piece.tile);
+
+        if (topLeftTile != null)
+        {
+            threatenedTiles.Add(topLeftTile);
+        }
+
+        GameObject topRightTile = tileManager.GetTile(new Vector2(1, -1), piece.tile);
+
+        if (topRightTile != null)
+        {
+            threatenedTiles.Add(topLeftTile);
+        }
+
+        return threatenedTiles;
+    }
+
+    public void SetEnPassantTile(GameObject activeTile)
+    {
+        GameObject farTile = tileManager.GetTile(new Vector2(0, 2), piece.tile);
+
+        if (activeTile == farTile)
+        {
+            GameObject nearTile = tileManager.GetTile(new Vector2(0, 1), piece.tile);
+            Tile nearTileScript = nearTile.GetComponent<Tile>();
+
+            nearTileScript.isGoodForEnPassant = true;
+            nearTileScript.SetEnPassantPiece(gameObject);
+        }
     }
 }

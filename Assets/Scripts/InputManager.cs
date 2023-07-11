@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PieceController : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     private GameObject selectedPiece;
     private Vector2 originalPiecePosition;
-    TileManager tileManager;
     GameController gameController;
-    MoveController moveController;
+    TileManager tileManager;
     private List<GameObject> activeTiles;
 
     private void Start()
@@ -65,6 +64,7 @@ public class PieceController : MonoBehaviour
             if (selectedPiece.GetComponent<Piece>().canMove)
             {
                 originalPiecePosition = selectedPiece.transform.position;
+                SetActiveTiles();
                 ShowPossibleMoves();
             }
 
@@ -102,24 +102,16 @@ public class PieceController : MonoBehaviour
         return null;
     }
 
+    private void PlacePiece(GameObject piece, Vector2 position)
+    {
+        piece.transform.position = position;
+    }
+
     private void ApplyMove(GameObject activeTile)
     {
         PlacePiece(selectedPiece, activeTile.transform.position);
-
-        Tile oldTile = selectedPiece.GetComponent<Piece>().tile.GetComponent<Tile>();
-        oldTile.SetPiece();
-
-        Piece.Player player = selectedPiece.GetComponent<Piece>().player;
-        GameObject capturedPiece = null;
-
-        if (tileManager.CheckRivalOccupation(activeTile, player))
-        {
-            capturedPiece = activeTile.GetComponent<Tile>().piece;
-        }
-
-        gameController.ApplyMove(selectedPiece, capturedPiece);
-        gameController.SetTilesPassive(activeTiles);
         HidePossibleMoves();
+        gameController.ApplyMove(selectedPiece, activeTile, activeTiles);
         selectedPiece = null;
     }
 
@@ -135,37 +127,72 @@ public class PieceController : MonoBehaviour
         selectedPiece = null;
     }
 
-    private void PlacePiece(GameObject piece, Vector2 position)
-    {
-        piece.transform.position = position;
-    }
+    
 
     private void ShowPossibleMoves()
     {
-        SetControllerType();
+        selectedPiece.GetComponent<SpriteRenderer>().sortingOrder = 2;
+
+        foreach (GameObject tileObject in activeTiles)
+        {
+            Tile tile = tileObject.GetComponent<Tile>();
+
+            if (tile.isGoodForMove)
+            {
+                tile.GetComponent<SpriteRenderer>().color = Color.green;
+            }
+
+            if (tile.isGoodForCapture)
+            {
+                tile.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+        }
+    }
+
+    private void SetActiveTiles()
+    {
+        MoveController moveController = selectedPiece.GetComponent<MoveController>();
+        Piece piece = selectedPiece.GetComponent<Piece>();
 
         List<GameObject> possibleMoves = moveController.CheckMoves();
         List<GameObject> possibleCaptures = moveController.CheckCaptures();
+        List<GameObject> threatenedTiles = tileManager.GetThreatenedTiles(gameController.currentPlayer);
 
-        foreach (GameObject tile in possibleMoves)
+        foreach (GameObject tileObject in possibleMoves)
         {
-            tile.GetComponent<Tile>().isGoodForMove = true;
-            tile.GetComponent<SpriteRenderer>().color = Color.green;
-            activeTiles.Add(tile);
+            Tile tile = tileObject.GetComponent<Tile>();
+
+            if (piece.type == Piece.PieceType.King && threatenedTiles.Contains(tileObject))
+            {
+                continue;
+            }
+
+            tile.isGoodForMove = true;
+            activeTiles.Add(tileObject);
         }
 
-        foreach (GameObject tile in possibleCaptures)
+        foreach (GameObject tileObject in possibleCaptures)
         {
-            tile.GetComponent<Tile>().isGoodForCapture = true;
-            tile.GetComponent <SpriteRenderer>().color = Color.red;
-            activeTiles.Add(tile);
-        }
+            Tile tile = tileObject.GetComponent<Tile>();
 
+            if (piece.type == Piece.PieceType.King && threatenedTiles.Contains(tileObject))
+            {
+                continue;
+            }
+
+            tile.isGoodForCapture = true;
+            activeTiles.Add(tileObject);
+        }
         
     }
 
     private void HidePossibleMoves()
     {
+        if (selectedPiece != null)
+        {
+            selectedPiece.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        }
+
         foreach (GameObject tile in activeTiles)
         {
             gameController.SetTilesPassive(activeTiles);
@@ -175,41 +202,4 @@ public class PieceController : MonoBehaviour
         activeTiles.Clear();
     }
 
-    private void SetControllerType()
-    {
-        Piece.PieceType type = selectedPiece.GetComponent<Piece>().type;
-
-        switch (type)
-        {
-            case Piece.PieceType.Pawn:
-
-                moveController = selectedPiece.GetComponent<PawnController>();
-                break;
-
-            case Piece.PieceType.Knight:
-
-                moveController = selectedPiece.GetComponent<KnightController>();
-                break;
-
-            case Piece.PieceType.Bishop:
-
-                moveController = selectedPiece.GetComponent<BishopController>();
-                break;
-
-            case Piece.PieceType.Rook:
-
-                moveController = selectedPiece.GetComponent<RookController>();
-                break;
-
-            case Piece.PieceType.Queen:
-
-                moveController = selectedPiece.GetComponent<QueenController>();
-                break;
-
-            case Piece.PieceType.King:
-
-                moveController= selectedPiece.GetComponent<KingController>();
-                break;
-        }
-    }
 }
