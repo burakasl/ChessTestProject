@@ -9,12 +9,14 @@ public class InputManager : MonoBehaviour
     private Vector2 originalPiecePosition;
     GameController gameController;
     TileManager tileManager;
+    KingThreatManager kingThreatManager;
     private List<GameObject> activeTiles;
 
     private void Start()
     {
         tileManager = GetComponent<TileManager>();
         gameController = GetComponent<GameController>();
+        kingThreatManager = GetComponent<KingThreatManager>();
         activeTiles = new List<GameObject>();
         selectedPiece = null;
     }
@@ -157,6 +159,7 @@ public class InputManager : MonoBehaviour
         List<GameObject> possibleMoves = moveController.CheckMoves();
         List<GameObject> possibleCaptures = moveController.CheckCaptures();
         List<GameObject> threatenedTiles = tileManager.GetThreatenedTiles(gameController.currentPlayer);
+        List<GameObject> tempTiles = new List<GameObject>();
 
         foreach (GameObject tileObject in possibleMoves)
         {
@@ -168,7 +171,7 @@ public class InputManager : MonoBehaviour
             }
 
             tile.isGoodForMove = true;
-            activeTiles.Add(tileObject);
+            tempTiles.Add(tileObject);
         }
 
         foreach (GameObject tileObject in possibleCaptures)
@@ -181,9 +184,38 @@ public class InputManager : MonoBehaviour
             }
 
             tile.isGoodForCapture = true;
-            activeTiles.Add(tileObject);
+            tempTiles.Add(tileObject);
         }
-        
+
+        List<Pin> pins = kingThreatManager.CheckPins(piece.player);
+        Pin selectedPin = null;
+
+        foreach (Pin pin in pins)
+        {
+            if (pin.pinnedPiece == selectedPiece)
+            {
+                selectedPin = pin;
+                break;
+            }
+        }
+
+        if (selectedPin == null)
+        {
+            activeTiles = tempTiles;
+        }
+
+        else
+        {
+            List<GameObject> pinTiles = selectedPin.pinTiles;
+
+            foreach (GameObject tile in tempTiles)
+            {
+                if (pinTiles.Contains(tile))
+                {
+                    activeTiles.Add(tile);
+                }
+            }
+        }
     }
 
     private void HidePossibleMoves()

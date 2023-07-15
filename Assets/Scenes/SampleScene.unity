@@ -629,6 +629,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9158291009026758186, guid: 797f3c22bfe1fb742bd085c3879ccc79, type: 3}
   m_PrefabInstance: {fileID: 2065041069}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &119756345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8456485613279877348, guid: 1c443080409a452479946b41181a1b8a, type: 3}
+  m_PrefabInstance: {fileID: 4305537320518077448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &143963862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1438,6 +1443,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 9158291009026758186, guid: 797f3c22bfe1fb742bd085c3879ccc79, type: 3}
   m_PrefabInstance: {fileID: 813184382}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &339329371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5547620830482678752, guid: e7622ce31e461d24ca5ab1efa178e444, type: 3}
+  m_PrefabInstance: {fileID: 3187863235018624886}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &349380926 stripped
 Transform:
@@ -3259,6 +3269,7 @@ GameObject:
   - component: {fileID: 1243364403}
   - component: {fileID: 1243364404}
   - component: {fileID: 1243364405}
+  - component: {fileID: 1243364406}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -3335,6 +3346,20 @@ MonoBehaviour:
   pieces: {fileID: 1189204951}
   tiles: {fileID: 1764451209}
   currentPlayer: 0
+--- !u!114 &1243364406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243364398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d9dac5ba7679148a41a03f02581964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whiteKing: {fileID: 339329371}
+  blackKing: {fileID: 119756345}
 --- !u!1001 &1251835064
 PrefabInstance:
   m_ObjectHideFlags: 0
